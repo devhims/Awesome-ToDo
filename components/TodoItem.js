@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  Checkbox,
   HStack,
   IconButton,
   Input,
@@ -11,13 +12,14 @@ import { FaTrash, FaEdit, FaCheck } from 'react-icons/fa';
 
 const TodoItem = ({ todo, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [complete, setComplete] = useState(false);
   const [item, setItem] = useState(todo.todo);
   const toast = useToast();
 
   const editCheckAndSubmit = () => {
     if (!item.length) {
       toast({
-        title: 'Cannot add empty todo!',
+        title: 'Cannot add empty task',
         status: 'error',
         duration: 3000,
         isClosable: true,
@@ -29,8 +31,18 @@ const TodoItem = ({ todo, onDelete }) => {
   };
 
   return (
-    <HStack key={todo.id} m={2}>
-      {!isEditing && <Text>{item}</Text>}
+    <HStack key={todo.id} m={2} alignItems="center">
+      <Checkbox
+        colorScheme="teal"
+        size="md"
+        borderColor="teal"
+        onChange={() => setComplete(!complete)}
+      ></Checkbox>
+      {!isEditing && (
+        <Text as={complete && 's'} fontSize="md">
+          {item}
+        </Text>
+      )}
       {isEditing && (
         <>
           <Input
@@ -45,6 +57,8 @@ const TodoItem = ({ todo, onDelete }) => {
             icon={<FaCheck />}
             isRound="true"
             onClick={editCheckAndSubmit}
+            size="sm"
+            colorScheme="teal"
           />
         </>
       )}
@@ -54,11 +68,13 @@ const TodoItem = ({ todo, onDelete }) => {
           icon={<FaEdit />}
           isRound="true"
           onClick={() => setIsEditing(true)}
+          size="sm"
         />
         <IconButton
           icon={<FaTrash />}
           isRound="true"
           onClick={() => onDelete(todo.id)}
+          size="sm"
         />
       </HStack>
     </HStack>

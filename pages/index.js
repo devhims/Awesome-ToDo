@@ -22,11 +22,6 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <VStack spacing={8} alignItems="center" justifyContent="space-evenly">
         <Header />
         <Flex

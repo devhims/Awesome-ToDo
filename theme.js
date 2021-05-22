@@ -21,15 +21,15 @@ const customTheme = extendTheme({
           fontStyle: 'normal !important',
         },
       },
-      a: {
-        color: mode('blue.500', 'blue.200')(props),
-        transition: 'color 0.15s',
-        transitionTimingFunction: 'ease-out',
-        fontWeight: '500',
-        _hover: {
-          color: mode('blue.600', 'blue.300')(props),
-        },
-      },
+      // a: {
+      //   color: mode('blue.500', 'blue.200')(props),
+      //   transition: 'color 0.15s',
+      //   transitionTimingFunction: 'ease-out',
+      //   fontWeight: '500',
+      //   _hover: {
+      //     color: mode('blue.600', 'blue.300')(props),
+      //   },
+      // },
     }),
   },
   components: {

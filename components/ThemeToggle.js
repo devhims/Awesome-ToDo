@@ -43,6 +43,7 @@ const ThemeToggle = () => {
         />
       ) : (
         <IconButton
+          colorScheme="teal"
           aria-label="Switch theme"
           variant={mobile ? 'ghost' : 'outline'}
           icon={

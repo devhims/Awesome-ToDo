@@ -6,10 +6,22 @@ import { VStack, Flex, Box, useColorModeValue } from '@chakra-ui/react';
 
 import TodoList from '../components/TodoList';
 
-import { useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 
-export default function Home() {
-  const [todoItems, setTodoItems] = useState([]);
+import { TodosContext } from '../contexts/TodoContext';
+
+import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
+
+import { table, minifyRecords } from '../pages/api/utils/airtable';
+
+export default function Home({ initialTodos, user }) {
+  // const [todoItems, setTodoItems] = useState([]);
+
+  const { todos, setTodos } = useContext(TodosContext);
+
+  useEffect(() => {
+    setTodos(initialTodos);
+  }, []);
 
   const addTodo = (addedTodo) => {
     setTodoItems((oldTodos) => [addedTodo, ...oldTodos]);
@@ -32,9 +44,24 @@ export default function Home() {
           maxWidth={{ base: '90vw', sm: '80vw', lg: '50vw', xl: '40vw' }}
         >
           <TodoForm onAddTodo={addTodo} />
-          <TodoList todos={todoItems} onDeleteTodoItem={deleteTodo} />
+          <TodoList user={user} todos={todos} onDeleteTodoItem={deleteTodo} />
         </Flex>
       </VStack>
     </>
   );
 }
+
+export const getServerSideProps = withPageAuthRequired({
+  async getServerSideProps(context) {
+    const user = getSession(context.req, context.res);
+
+    const todos = await table.select().firstPage();
+    return {
+      props: {
+        initialTodos: minifyRecords(todos),
+      },
+    };
+  },
+});
+
+// { filterByFormula: `userId = '${user.user.sub}'` }

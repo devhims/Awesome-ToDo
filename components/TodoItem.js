@@ -12,8 +12,9 @@ import { FaTrash, FaEdit, FaCheck } from 'react-icons/fa';
 
 const TodoItem = ({ todo, onDelete }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [complete, setComplete] = useState(false);
-  const [item, setItem] = useState(todo.todo);
+  const [complete, setComplete] = useState(todo.fields.completed);
+  // const [item, setItem] = useState(todo.todo);
+  const [item, setItem] = useState(todo.fields.task);
   const toast = useToast();
 
   const editCheckAndSubmit = () => {
@@ -33,10 +34,12 @@ const TodoItem = ({ todo, onDelete }) => {
   return (
     <HStack key={todo.id} m={2} alignItems="center">
       <Checkbox
+        //isChecked={todo.fields.completed}
         colorScheme="teal"
         size="md"
         borderColor="teal"
         onChange={() => setComplete(!complete)}
+        isChecked={complete}
       ></Checkbox>
       {!isEditing && (
         <Text as={complete && 's'} fontSize="md">

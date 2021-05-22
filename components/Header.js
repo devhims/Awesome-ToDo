@@ -4,10 +4,17 @@ import {
   useColorModeValue,
   Flex,
   Button,
+  Text,
 } from '@chakra-ui/react';
 import ThemeToggle from './ThemeToggle';
 
+import Link from 'next/link';
+
+import { useUser } from '@auth0/nextjs-auth0';
+
 const Header = () => {
+  const { user } = useUser();
+
   return (
     <Flex
       width="100%"
@@ -26,7 +33,17 @@ const Header = () => {
         Awesome ToDo
       </Heading>
       <HStack>
-        <Button variant="outline">Login</Button>
+        <Button variant="outline" colorScheme="teal">
+          {user ? (
+            <Link href="/api/auth/logout">
+              <a>
+                <Text>Logout</Text>
+              </a>
+            </Link>
+          ) : (
+            <Link href="/api/auth/login">Login</Link>
+          )}
+        </Button>
         <ThemeToggle />
       </HStack>
     </Flex>

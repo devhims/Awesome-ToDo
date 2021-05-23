@@ -1,67 +1,59 @@
-import Head from 'next/head';
-import Header from '../components/Header';
-import TodoForm from '../components/TodoForm';
+import { useUser, getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { useEffect } from 'react';
 
-import { VStack, Flex, Box, useColorModeValue } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 
-import TodoList from '../components/TodoList';
+import { Center, Spinner, Box, Text } from '@chakra-ui/react';
 
-import { useContext, useState, useEffect } from 'react';
-
-import { TodosContext } from '../contexts/TodoContext';
-
-import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
-
-import { table, minifyRecords } from '../pages/api/utils/airtable';
-
-export default function Home({ initialTodos, user }) {
+export default function Home() {
   // const [todoItems, setTodoItems] = useState([]);
 
-  const { todos, setTodos } = useContext(TodosContext);
+  const { user, error, isLoading } = useUser();
+
+  const router = useRouter();
 
   useEffect(() => {
-    setTodos(initialTodos);
-  }, []);
+    if (user) {
+      router.push('/authtodos');
+    }
+  }, [user]);
 
-  const addTodo = (addedTodo) => {
-    setTodoItems((oldTodos) => [addedTodo, ...oldTodos]);
-  };
-
-  const deleteTodo = (id) => {
-    const newTodoItems = todoItems.filter((todo) => todo.id !== id);
-    setTodoItems(newTodoItems);
-  };
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>{error.message}</div>;
 
   return (
     <>
-      <VStack spacing={8} alignItems="center" justifyContent="space-evenly">
-        <Header />
-        <Flex
-          direction="column"
-          p={3}
-          borderRadius="md"
-          width="100%"
-          maxWidth={{ base: '90vw', sm: '80vw', lg: '50vw', xl: '40vw' }}
+      {!user && (
+        <Center
+          pos="fixed"
+          top="50%"
+          left="50%"
+          transform="translate(-50%, -50%)"
         >
-          <TodoForm onAddTodo={addTodo} />
-          <TodoList user={user} todos={todos} onDeleteTodoItem={deleteTodo} />
-        </Flex>
-      </VStack>
+          <Box
+            borderWidth="2px"
+            borderRadius="lg"
+            px={5}
+            py={3}
+            textAlign="center"
+          >
+            <Text fontSize="medium">Please login to save your tasks</Text>
+          </Box>
+        </Center>
+      )}
+      {user && (
+        <Center pos="fixed" left="50%" top="50%">
+          <Spinner
+            thickness="4px"
+            speed="0.65s"
+            emptyColor="gray.200"
+            color="blue.500"
+            size="xl"
+          />
+        </Center>
+      )}
     </>
   );
 }
-
-export const getServerSideProps = withPageAuthRequired({
-  async getServerSideProps(context) {
-    const user = getSession(context.req, context.res);
-
-    const todos = await table.select().firstPage();
-    return {
-      props: {
-        initialTodos: minifyRecords(todos),
-      },
-    };
-  },
-});
 
 // { filterByFormula: `userId = '${user.user.sub}'` }

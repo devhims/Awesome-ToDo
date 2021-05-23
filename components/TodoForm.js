@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import {
   Input,
   HStack,
@@ -12,9 +12,15 @@ import {
 } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
 
+import { useUser } from '@auth0/nextjs-auth0';
+
+import { TodosContext } from '../contexts/TodoContext';
+
 const TodoForm = ({ onAddTodo }) => {
   const [content, setContent] = useState('');
   const toast = useToast();
+  const { addTodo } = useContext(TodosContext);
+  const { user } = useUser();
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -29,11 +35,13 @@ const TodoForm = ({ onAddTodo }) => {
     }
 
     const todo = {
-      id: nanoid(),
-      todo: content.trim(),
+      // id: nanoid(),
+      // todo: content.trim(),
+      fields: { task: content, completed: false, userId: user.sub },
     };
 
-    onAddTodo(todo);
+    //onAddTodo(todo);
+    addTodo(todo);
     setContent('');
   };
 

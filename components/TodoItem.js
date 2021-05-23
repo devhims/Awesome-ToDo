@@ -1,4 +1,7 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+
+import { TodosContext } from '../contexts/TodoContext';
+
 import {
   Checkbox,
   HStack,
@@ -10,12 +13,25 @@ import {
 } from '@chakra-ui/react';
 import { FaTrash, FaEdit, FaCheck } from 'react-icons/fa';
 
-const TodoItem = ({ todo, onDelete }) => {
+const TodoItem = ({ todo }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [complete, setComplete] = useState(todo.fields.completed);
   // const [item, setItem] = useState(todo.todo);
   const [item, setItem] = useState(todo.fields.task);
   const toast = useToast();
+
+  const { updateTodo, deleteTodo } = useContext(TodosContext);
+
+  const handleUpdate = () => {
+    setComplete(!complete);
+    const updatedFields = {
+      ...todo.fields,
+      completed: !todo.fields.completed,
+    };
+    const updatedTodo = { id: todo.id, fields: updatedFields };
+
+    updateTodo(updatedTodo);
+  };
 
   const editCheckAndSubmit = () => {
     if (!item.length) {
@@ -27,7 +43,16 @@ const TodoItem = ({ todo, onDelete }) => {
       });
       return;
     }
-    setItem(item.trim());
+
+    const updatedFields = {
+      ...todo.fields,
+      task: item,
+    };
+    const updatedTodo = { id: todo.id, fields: updatedFields };
+
+    updateTodo(updatedTodo);
+
+    // setItem(item.trim());
     setIsEditing(false);
   };
 
@@ -38,7 +63,7 @@ const TodoItem = ({ todo, onDelete }) => {
         colorScheme="teal"
         size="md"
         borderColor="teal"
-        onChange={() => setComplete(!complete)}
+        onChange={handleUpdate}
         isChecked={complete}
       ></Checkbox>
       {!isEditing && (
@@ -76,7 +101,7 @@ const TodoItem = ({ todo, onDelete }) => {
         <IconButton
           icon={<FaTrash />}
           isRound="true"
-          onClick={() => onDelete(todo.id)}
+          onClick={() => deleteTodo(todo.id)}
           size="sm"
         />
       </HStack>

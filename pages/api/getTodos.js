@@ -5,7 +5,9 @@ import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0';
 export default withApiAuthRequired(async (req, res) => {
   const { user } = getSession(req, res);
   try {
-    const records = await table.select().firstPage(); //20 records
+    const records = await table
+      .select({ filterByFormula: `userId = '${user.sub}'` })
+      .firstPage(); //20 records
     const formattedRecords = minifyRecords(records);
     console.log(formattedRecords);
     res.statusCode = 200;

@@ -18,8 +18,37 @@ export default function Home() {
     }
   }, [user]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>{error.message}</div>;
+  if (isLoading)
+    return (
+      <Center pos="fixed" left="50%" top="50%">
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+        />
+      </Center>
+    );
+  if (error)
+    return (
+      <Center
+        pos="fixed"
+        top="50%"
+        left="50%"
+        transform="translate(-50%, -50%)"
+      >
+        <Box
+          borderWidth="2px"
+          borderRadius="lg"
+          px={5}
+          py={3}
+          textAlign="center"
+        >
+          <Text fontSize="medium">{error.message}</Text>
+        </Box>
+      </Center>
+    );
 
   return (
     <>

@@ -1,45 +1,55 @@
 import { createContext, useState } from 'react';
+import { nanoid } from 'nanoid';
 
 const TodosContext = createContext();
 
 const TodosProvider = ({ children }) => {
   const [todos, setTodos] = useState([]);
 
-  const refreshTodos = async () => {
-    try {
-      const res = await fetch('/api/getTodos');
-      const latestTodos = await res.json();
-      setTodos(latestTodos);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  // const refreshTodos = async () => {
+  //   try {
+  //     const res = await fetch('/api/getTodos');
+  //     const latestTodos = await res.json();
+  //     setTodos(latestTodos);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
   const addTodo = async (todo) => {
+    const dummyTodo = todo;
+
     try {
-      // setTodos((prevTodos) => {
-      //   const updatedTodos = [todo, ...prevTodos];
-      //   return updatedTodos;
-      // });
+      setTodos((prevTodos) => {
+        dummyTodo.id = nanoid();
+        const updatedTodos = [dummyTodo, ...prevTodos];
+        console.log(updatedTodos);
+        return updatedTodos;
+      });
+      // console.log(todo);
+      // console.log(todo.fields);
 
       const res = await fetch('/api/createTodo', {
         method: 'POST',
-        body: JSON.stringify(todo),
+        body: JSON.stringify({ fields: todo.fields }),
         headers: { 'Content-Type': 'application/json' },
       });
       const newTodo = await res.json();
 
-      // setTodos((prevTodos) => {
-      //   const existingTodos = [...prevTodos];
-      //   const existingTodo = existingTodos.find((entry) => entry === todo);
-      //   existingTodo.id = newTodo.id;
-      //   return existingTodos;
-      // });
-
       setTodos((prevTodos) => {
-        const updatedTodos = [newTodo, ...prevTodos];
-        return updatedTodos;
+        const existingTodos = [...prevTodos];
+        const existingTodo = existingTodos.find(
+          (entry) => entry.fields === todo.fields
+        );
+        existingTodo.id = newTodo.id;
+        return existingTodos;
       });
+
+      // setTodos((prevTodos) => {
+      //   console.log(prevTodos);
+      //   const updatedTodos = [newTodo, ...prevTodos];
+      //   return updatedTodos;
+      // });
     } catch (err) {
       console.error(err);
     }
@@ -89,7 +99,7 @@ const TodosProvider = ({ children }) => {
       value={{
         todos,
         setTodos,
-        refreshTodos,
+        // refreshTodos,
         updateTodo,
         deleteTodo,
         addTodo,

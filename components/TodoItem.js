@@ -15,7 +15,7 @@ import { FaTrash, FaEdit, FaCheck } from 'react-icons/fa';
 
 const TodoItem = ({ todo }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [complete, setComplete] = useState(false);
+  const [complete, setComplete] = useState(todo.fields.completed);
   // const [item, setItem] = useState(todo.todo);
   const [task, setTask] = useState(todo.fields.task);
   const toast = useToast();

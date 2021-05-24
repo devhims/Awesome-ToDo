@@ -53,9 +53,15 @@ export default AuthTodos;
 export const getServerSideProps = withPageAuthRequired({
   async getServerSideProps(context) {
     const user = getSession(context.req, context.res);
-    const todos = await table
+    let todos = await table
       .select({ filterByFormula: `userId = '${user.user.sub}'` })
       .firstPage();
+
+    todos = todos.sort((a, b) =>
+      a._rawJson.createdTime > b._rawJson.createdTime ? -1 : 1
+    );
+
+    // console.log(todos);
     return {
       props: {
         initialTodos: minifyRecords(todos),

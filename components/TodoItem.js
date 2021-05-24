@@ -68,7 +68,7 @@ const TodoItem = ({ todo }) => {
       ></Checkbox>
       {!isEditing && (
         <Text as={complete && 's'} fontSize="md">
-          {item}
+          {todo.fields.task}
         </Text>
       )}
       {isEditing && (

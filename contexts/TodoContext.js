@@ -17,10 +17,10 @@ const TodosProvider = ({ children }) => {
 
   const addTodo = async (todo) => {
     try {
-      setTodos((prevTodos) => {
-        const updatedTodos = [todo, ...prevTodos];
-        return updatedTodos;
-      });
+      // setTodos((prevTodos) => {
+      //   const updatedTodos = [todo, ...prevTodos];
+      //   return updatedTodos;
+      // });
 
       const res = await fetch('/api/createTodo', {
         method: 'POST',
@@ -29,11 +29,16 @@ const TodosProvider = ({ children }) => {
       });
       const newTodo = await res.json();
 
+      // setTodos((prevTodos) => {
+      //   const existingTodos = [...prevTodos];
+      //   const existingTodo = existingTodos.find((entry) => entry === todo);
+      //   existingTodo.id = newTodo.id;
+      //   return existingTodos;
+      // });
+
       setTodos((prevTodos) => {
-        const existingTodos = [...prevTodos];
-        const existingTodo = existingTodos.find((entry) => entry === todo);
-        existingTodo.id = newTodo.id;
-        return existingTodos;
+        const updatedTodos = [newTodo, ...prevTodos];
+        return updatedTodos;
       });
     } catch (err) {
       console.error(err);

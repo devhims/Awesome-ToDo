@@ -14,7 +14,7 @@ const TodoItems = ({ todoItems, onDeleteTodo }) => {
               px={2}
               py={0.5}
               borderRadius="5px"
-              key={index}
+              key={todoItem.id}
             >
               <TodoItem onDelete={onDeleteTodo} todo={todoItem} />
             </Box>

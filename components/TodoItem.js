@@ -15,15 +15,16 @@ import { FaTrash, FaEdit, FaCheck } from 'react-icons/fa';
 
 const TodoItem = ({ todo }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const [complete, setComplete] = useState(todo.fields.completed);
+  const [complete, setComplete] = useState(false);
   // const [item, setItem] = useState(todo.todo);
-  const [item, setItem] = useState(todo.fields.task);
+  const [task, setTask] = useState(todo.fields.task);
   const toast = useToast();
 
   const { updateTodo, deleteTodo } = useContext(TodosContext);
 
   const handleUpdate = () => {
     setComplete(!complete);
+
     const updatedFields = {
       ...todo.fields,
       completed: !todo.fields.completed,
@@ -34,7 +35,7 @@ const TodoItem = ({ todo }) => {
   };
 
   const editCheckAndSubmit = () => {
-    if (!item.length) {
+    if (!task.length) {
       toast({
         title: 'Cannot add empty task',
         status: 'error',
@@ -46,7 +47,7 @@ const TodoItem = ({ todo }) => {
 
     const updatedFields = {
       ...todo.fields,
-      task: item,
+      task: task,
     };
     const updatedTodo = { id: todo.id, fields: updatedFields };
 
@@ -75,8 +76,8 @@ const TodoItem = ({ todo }) => {
         <>
           <Input
             size="sm"
-            onChange={(event) => setItem(event.target.value)}
-            value={item}
+            onChange={(event) => setTask(event.target.value)}
+            value={task}
             borderStyle="none"
             _focus={{ borderStyle: 'none' }}
             _hover={{ borderStyle: 'none' }}

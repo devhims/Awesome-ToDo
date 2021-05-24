@@ -35,7 +35,7 @@ const TodoForm = ({ onAddTodo }) => {
     }
 
     const todo = {
-      // id: nanoid(),
+      //id: nanoid(),
       // todo: content.trim(),
       fields: { task: content, completed: false, userId: user.sub },
     };

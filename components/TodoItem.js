@@ -9,6 +9,7 @@ import {
   Spacer,
   Text,
   useToast,
+  Textarea,
 } from '@chakra-ui/react';
 import { FaTrash, FaEdit, FaCheck } from 'react-icons/fa';
 
@@ -71,8 +72,8 @@ const TodoItem = ({ todo }) => {
 
       {isEditing && (
         <>
-          <Input
-            size="sm"
+          <Textarea
+            // size="sm"
             onChange={(event) => setTask(event.target.value)}
             value={task}
             borderStyle="none"

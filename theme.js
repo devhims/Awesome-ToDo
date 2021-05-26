@@ -52,9 +52,10 @@ const customTheme = extendTheme({
         rounded: 'lg',
       },
     },
-    textarea: {
+    Textarea: {
       baseStyle: {
         background: 'green.300',
+        size: 'sm',
       },
     },
     Link: {

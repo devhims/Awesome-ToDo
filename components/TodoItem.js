@@ -1,5 +1,4 @@
 import { useState, useContext } from 'react';
-
 import { TodosContext } from '../contexts/TodoContext';
 
 import {
@@ -14,15 +13,14 @@ import {
 import { FaTrash, FaEdit, FaCheck } from 'react-icons/fa';
 
 const TodoItem = ({ todo }) => {
-  const [isEditing, setIsEditing] = useState(false);
   const [complete, setComplete] = useState(todo.fields.completed);
-  // const [item, setItem] = useState(todo.todo);
   const [task, setTask] = useState(todo.fields.task);
+  const [isEditing, setIsEditing] = useState(false);
   const toast = useToast();
 
   const { updateTodo, deleteTodo } = useContext(TodosContext);
 
-  const handleUpdate = () => {
+  const updateChecked = () => {
     setComplete(!complete);
 
     const updatedFields = {
@@ -52,24 +50,21 @@ const TodoItem = ({ todo }) => {
     const updatedTodo = { id: todo.id, fields: updatedFields };
 
     updateTodo(updatedTodo);
-
-    // setItem(item.trim());
     setIsEditing(false);
   };
 
   return (
     <HStack key={todo.id} m={2} alignItems="center">
       <Checkbox
-        //isChecked={todo.fields.completed}
         colorScheme="teal"
         size="md"
         borderColor="teal"
-        onChange={handleUpdate}
+        onChange={updateChecked}
         isChecked={complete}
       ></Checkbox>
       {!isEditing && (
         <Text as={complete && 's'} fontSize="md">
-          {todo.fields.task}
+          {task}
         </Text>
       )}
       {isEditing && (
@@ -102,7 +97,7 @@ const TodoItem = ({ todo }) => {
         <IconButton
           icon={<FaTrash />}
           isRound="true"
-          onClick={() => deleteTodo(todo.id)}
+          onClick={() => deleteTodo(todo)}
           size="sm"
         />
       </HStack>

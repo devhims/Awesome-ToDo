@@ -1,14 +1,10 @@
 import { table } from './utils/airtable.js';
-
-import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0';
+import { withApiAuthRequired } from '@auth0/nextjs-auth0';
 
 const handler = withApiAuthRequired(async (req, res) => {
-  const { user } = getSession(req, res);
-  const { id, fields } = req.body;
-
+  const todo = req.body;
   try {
-    const newFields = { ...fields, userId: user.sub };
-    const updatedRecord = await table.update([{ id, fields: newFields }]);
+    const updatedRecord = await table.update([todo]);
     res.statusCode = 200;
     res.json(updatedRecord);
   } catch (error) {

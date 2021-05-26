@@ -2,10 +2,9 @@ import { table } from './utils/airtable.js';
 import { withApiAuthRequired } from '@auth0/nextjs-auth0';
 
 const handler = withApiAuthRequired(async (req, res) => {
-  const { id } = req.body;
-
+  const todo = req.body;
   try {
-    const deletedRecord = await table.destroy([id]);
+    const deletedRecord = await table.destroy([todo.id]);
     res.statusCode = 200;
     res.json(deletedRecord);
   } catch (error) {

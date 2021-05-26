@@ -1,37 +1,19 @@
 import { createContext, useState } from 'react';
-import { nanoid } from 'nanoid';
-
 const TodosContext = createContext();
 
 const TodosProvider = ({ children }) => {
   const [todos, setTodos] = useState([]);
 
-  // const refreshTodos = async () => {
-  //   try {
-  //     const res = await fetch('/api/getTodos');
-  //     const latestTodos = await res.json();
-  //     setTodos(latestTodos);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
-
   const addTodo = async (todo) => {
-    const dummyTodo = todo;
-
     try {
       setTodos((prevTodos) => {
-        dummyTodo.id = nanoid();
-        const updatedTodos = [dummyTodo, ...prevTodos];
-        console.log(updatedTodos);
+        const updatedTodos = [todo, ...prevTodos];
         return updatedTodos;
       });
-      // console.log(todo);
-      // console.log(todo.fields);
 
       const res = await fetch('/api/createTodo', {
         method: 'POST',
-        body: JSON.stringify({ fields: todo.fields }),
+        body: JSON.stringify(todo),
         headers: { 'Content-Type': 'application/json' },
       });
       const newTodo = await res.json();
@@ -44,12 +26,6 @@ const TodosProvider = ({ children }) => {
         existingTodo.id = newTodo.id;
         return existingTodos;
       });
-
-      // setTodos((prevTodos) => {
-      //   console.log(prevTodos);
-      //   const updatedTodos = [newTodo, ...prevTodos];
-      //   return updatedTodos;
-      // });
     } catch (err) {
       console.error(err);
     }
@@ -78,15 +54,15 @@ const TodosProvider = ({ children }) => {
     }
   };
 
-  const deleteTodo = async (id) => {
+  const deleteTodo = async (selectedTodo) => {
     try {
       setTodos((prevTodos) => {
-        return prevTodos.filter((todo) => todo.id !== id);
+        return prevTodos.filter((todo) => todo.id !== selectedTodo.id);
       });
 
       await fetch('/api/deleteTodo', {
         method: 'Delete',
-        body: JSON.stringify({ id }),
+        body: JSON.stringify(selectedTodo),
         headers: { 'Content-Type': 'application/json' },
       });
     } catch (err) {

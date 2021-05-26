@@ -20,7 +20,12 @@ export default function Home() {
 
   if (isLoading)
     return (
-      <Center pos="fixed" left="50%" top="50%">
+      <Center
+        pos="fixed"
+        left="50%"
+        top="50%"
+        transform="translate(-50%, -50%)"
+      >
         <Spinner
           thickness="4px"
           speed="0.65s"

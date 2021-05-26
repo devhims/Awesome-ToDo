@@ -11,6 +11,7 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
+import moment from 'moment';
 
 import { useUser } from '@auth0/nextjs-auth0';
 
@@ -37,7 +38,12 @@ const TodoForm = ({ onAddTodo }) => {
     const todo = {
       id: nanoid(),
       // todo: content.trim(),
-      fields: { task: content, completed: false, userId: user.sub },
+      fields: {
+        task: content,
+        completed: false,
+        date: moment().format('L'),
+        userId: user.sub,
+      },
     };
 
     //onAddTodo(todo);

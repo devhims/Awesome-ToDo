@@ -1,11 +1,14 @@
 import { Flex, Box } from '@chakra-ui/react';
 import NoTodos from './NoTodos';
+import TodoGroup from './TodoGroup';
 import TodoItems from './TodoItems';
 
-const TodoList = ({ todos, onDeleteTodoItem }) => {
+const TodoList = ({ todos }) => {
   if (!todos.length) return <NoTodos />;
 
-  return <TodoItems onDeleteTodo={onDeleteTodoItem} todoItems={todos} />;
+  return <TodoGroup todoItems={todos} />;
+
+  // return <TodoItems todoItems={todos} />;
 };
 
 export default TodoList;

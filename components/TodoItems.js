@@ -1,11 +1,12 @@
 import TodoItem from './TodoItem';
 import { Box } from '@chakra-ui/react';
 
-const TodoItems = ({ todoItems, onDeleteTodo }) => {
+const TodoItems = ({ todoItems }) => {
+  // console.log(todoItems);
   return (
     <>
       {todoItems.length > 0 &&
-        todoItems.map((todoItem, index) => {
+        todoItems.map((todoItem) => {
           return (
             <Box
               borderColor="teal.600"
@@ -16,7 +17,7 @@ const TodoItems = ({ todoItems, onDeleteTodo }) => {
               borderRadius="5px"
               key={todoItem.id}
             >
-              <TodoItem onDelete={onDeleteTodo} todo={todoItem} />
+              <TodoItem todo={todoItem} />
             </Box>
           );
         })}

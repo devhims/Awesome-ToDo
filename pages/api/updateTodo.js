@@ -3,14 +3,13 @@ import { withApiAuthRequired } from '@auth0/nextjs-auth0';
 
 const handler = withApiAuthRequired(async (req, res) => {
   const todo = req.body;
+  delete todo.fields.id;
   try {
     const updatedRecord = await table.update([todo]);
-    res.statusCode = 200;
-    res.json(updatedRecord);
+    res.status(200).json(updatedRecord);
   } catch (error) {
     console.error(error);
-    res.statusCode = 500;
-    res.json({ msg: 'Something went wrong' });
+    res.status(500).json({ msg: 'Something went wrong' });
   }
 });
 

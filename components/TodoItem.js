@@ -13,8 +13,9 @@ import {
 import { FaTrash, FaEdit, FaCheck } from 'react-icons/fa';
 
 const TodoItem = ({ todo }) => {
-  const [complete, setComplete] = useState(todo.fields.completed);
-  const [task, setTask] = useState(todo.fields.task);
+  // console.log(todo);
+  const [complete, setComplete] = useState(todo.completed);
+  const [task, setTask] = useState(todo.task);
   const [isEditing, setIsEditing] = useState(false);
   const toast = useToast();
 
@@ -24,8 +25,8 @@ const TodoItem = ({ todo }) => {
     setComplete(!complete);
 
     const updatedFields = {
-      ...todo.fields,
-      completed: !todo.fields.completed,
+      ...todo,
+      completed: !todo.completed,
     };
     const updatedTodo = { id: todo.id, fields: updatedFields };
 
@@ -44,7 +45,7 @@ const TodoItem = ({ todo }) => {
     }
 
     const updatedFields = {
-      ...todo.fields,
+      ...todo,
       task: task,
     };
     const updatedTodo = { id: todo.id, fields: updatedFields };

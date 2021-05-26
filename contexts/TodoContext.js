@@ -32,6 +32,7 @@ const TodosProvider = ({ children }) => {
   };
 
   const updateTodo = async (updatedTodo) => {
+    // console.log(updatedTodo);
     try {
       setTodos((prevTodos) => {
         const existingTodos = [...prevTodos];

@@ -8,13 +8,13 @@ const TodoGroup = ({ todoItems }) => {
   const { datedTodos } = todoItems.reduce(
     (total, item) => {
       const { id, fields } = item;
-      if (!total.datedTodos[fields.date]) {
-        total.datedTodos[fields.date] = [{ id, ...fields }];
+      let { date } = fields;
+      date = moment(new Date(date)).format('LL');
+      console.log(date);
+      if (!total.datedTodos[date]) {
+        total.datedTodos[date] = [{ id, ...fields }];
       } else {
-        total.datedTodos[fields.date] = [
-          ...total.datedTodos[fields.date],
-          { id, ...fields },
-        ];
+        total.datedTodos[date] = [...total.datedTodos[date], { id, ...fields }];
       }
       return total;
     },
@@ -26,7 +26,7 @@ const TodoGroup = ({ todoItems }) => {
   const todos = Object.values(datedTodos);
   const dates = Object.keys(datedTodos);
 
-  // console.log(todos, dates);
+  console.log(todos, dates);
   // console.log(todos[0], dates[0]);
 
   return (
@@ -43,7 +43,7 @@ const TodoGroup = ({ todoItems }) => {
               roundedTopRight="md"
               roundedBottomRight="md"
             >
-              {moment(new Date(date)).format('LL')}
+              {date}
             </Badge>
             <TodoItems todoItems={todos[index]} />
           </Box>

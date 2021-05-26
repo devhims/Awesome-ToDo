@@ -80,6 +80,11 @@ const TodoItem = ({ todo }) => {
             _focus={{ borderStyle: 'none' }}
             _hover={{ borderStyle: 'none' }}
             autoFocus
+            onFocus={(e) => {
+              var val = e.target.value;
+              e.target.value = '';
+              e.target.value = val;
+            }}
           />
           <IconButton
             icon={<FaCheck />}

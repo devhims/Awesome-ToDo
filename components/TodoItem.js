@@ -55,12 +55,7 @@ const TodoItem = ({ todo }) => {
   };
 
   return (
-    <HStack
-      key={todo.id}
-      m={2}
-      alignItems="center"
-      justifyContent="space-between"
-    >
+    <HStack key={todo.id} m={2} alignItems="center">
       <Checkbox
         colorScheme="teal"
         size="md"
@@ -73,6 +68,7 @@ const TodoItem = ({ todo }) => {
           {task}
         </Text>
       )}
+
       {isEditing && (
         <>
           <Input
@@ -82,6 +78,7 @@ const TodoItem = ({ todo }) => {
             borderStyle="none"
             _focus={{ borderStyle: 'none' }}
             _hover={{ borderStyle: 'none' }}
+            autoFocus
           />
           <IconButton
             icon={<FaCheck />}
@@ -92,7 +89,7 @@ const TodoItem = ({ todo }) => {
           />
         </>
       )}
-      <Spacer />
+      {!isEditing && <Spacer />}
       {!isEditing && (
         <HStack spacing="3">
           <IconButton

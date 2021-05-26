@@ -35,7 +35,8 @@ const AuthTodos = ({ initialTodos, user }) => {
       <VStack spacing={8} alignItems="center" justifyContent="space-evenly">
         <Flex
           direction="column"
-          p={3}
+          py={2}
+          px={{ base: 0, md: 2 }}
           borderRadius="md"
           width="100%"
           maxWidth={{ base: '90vw', sm: '80vw', lg: '50vw', xl: '40vw' }}

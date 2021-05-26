@@ -70,7 +70,13 @@ const TodoForm = ({ onAddTodo }) => {
           my={2}
           //bg={useColorModeValue('gray.200', 'gray.400')}
         />
-        <Button colorScheme="teal" type="submit" w="inherit" my={2}>
+        <Button
+          colorScheme="teal"
+          type="submit"
+          w="inherit"
+          my={2}
+          rounded="md"
+        >
           Add Task
         </Button>
       </FormControl>

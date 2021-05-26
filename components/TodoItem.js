@@ -55,7 +55,12 @@ const TodoItem = ({ todo }) => {
   };
 
   return (
-    <HStack key={todo.id} m={2} alignItems="center">
+    <HStack
+      key={todo.id}
+      m={2}
+      alignItems="center"
+      justifyContent="space-between"
+    >
       <Checkbox
         colorScheme="teal"
         size="md"
@@ -88,20 +93,22 @@ const TodoItem = ({ todo }) => {
         </>
       )}
       <Spacer />
-      <HStack spacing="3">
-        <IconButton
-          icon={<FaEdit />}
-          isRound="true"
-          onClick={() => setIsEditing(true)}
-          size="sm"
-        />
-        <IconButton
-          icon={<FaTrash />}
-          isRound="true"
-          onClick={() => deleteTodo(todo)}
-          size="sm"
-        />
-      </HStack>
+      {!isEditing && (
+        <HStack spacing="3">
+          <IconButton
+            icon={<FaEdit />}
+            isRound="true"
+            onClick={() => setIsEditing(true)}
+            size="sm"
+          />
+          <IconButton
+            icon={<FaTrash />}
+            isRound="true"
+            onClick={() => deleteTodo(todo)}
+            size="sm"
+          />
+        </HStack>
+      )}
     </HStack>
   );
 };

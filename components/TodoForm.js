@@ -17,7 +17,7 @@ import { useUser } from '@auth0/nextjs-auth0';
 
 import { TodosContext } from '../contexts/TodoContext';
 
-const TodoForm = ({ onAddTodo }) => {
+const TodoForm = () => {
   const [content, setContent] = useState('');
   const toast = useToast();
   const { addTodo } = useContext(TodosContext);
@@ -65,10 +65,10 @@ const TodoForm = ({ onAddTodo }) => {
           _hover={{ borderColor: 'teal.600' }}
           _active={{ borderColor: 'teal.600' }}
           _focus={{ borderColor: 'teal.600' }}
-          borderColor={useColorModeValue('gray.50', 'teal.400')}
+          borderColor={useColorModeValue('gray.400', 'teal.400')}
           w="100%"
           my={2}
-          //bg={useColorModeValue('gray.200', 'gray.400')}
+          bg={useColorModeValue('gray.200', 'gray.700')}
         />
         <Button
           colorScheme="teal"

@@ -1,14 +1,13 @@
-import { Flex, Box } from '@chakra-ui/react';
+import { useContext } from 'react';
+import { TodosContext } from '../contexts/TodoContext';
 import NoTodos from './NoTodos';
 import TodoGroup from './TodoGroup';
-import TodoItems from './TodoItems';
 
-const TodoList = ({ todos }) => {
+const TodoList = () => {
+  const { todos } = useContext(TodosContext);
   if (!todos.length) return <NoTodos />;
 
   return <TodoGroup todoItems={todos} />;
-
-  // return <TodoItems todoItems={todos} />;
 };
 
 export default TodoList;

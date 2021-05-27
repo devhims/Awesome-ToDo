@@ -1,17 +1,12 @@
-import { Badge, Text, Box, Flex } from '@chakra-ui/react';
+import { Text, Box, Center } from '@chakra-ui/react';
 
 const NoTodos = () => {
   return (
-    <Box
-      borderWidth="2px"
-      borderRadius="lg"
-      p={2}
-      textAlign="center"
-      mx={2}
-      my={4}
-    >
-      <Text fontSize="medium">No tasks available</Text>
-    </Box>
+    <Center pos="fixed" left="50%" top="50%" transform="translate(-50%, -50%)">
+      <Box borderWidth="2px" borderRadius="lg" px={5} py={3} textAlign="center">
+        <Text fontSize="medium">No tasks available</Text>
+      </Box>
+    </Center>
   );
 };
 

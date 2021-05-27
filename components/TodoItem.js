@@ -10,6 +10,7 @@ import {
   Text,
   useToast,
   Textarea,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import { FaTrash, FaEdit, FaCheck } from 'react-icons/fa';
 
@@ -65,7 +66,11 @@ const TodoItem = ({ todo }) => {
         isChecked={complete}
       ></Checkbox>
       {!isEditing && (
-        <Text as={complete && 's'} fontSize="md">
+        <Text
+          as={complete && 's'}
+          fontSize="md"
+          color={complete && useColorModeValue('gray.600', 'gray.400')}
+        >
           {task}
         </Text>
       )}

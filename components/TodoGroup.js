@@ -1,16 +1,20 @@
-import { Flex, Box, Badge } from '@chakra-ui/react';
+import { useContext } from 'react';
+import { TodosContext } from '../contexts/TodoContext';
+
+import { Box, Badge } from '@chakra-ui/react';
 import moment from 'moment';
+
 import TodoItems from '../components/TodoItems';
 
-const TodoGroup = ({ todoItems }) => {
-  //console.log(todoItems);
+const TodoGroup = () => {
+  const { todos: todoItems } = useContext(TodosContext);
 
   const { datedTodos } = todoItems.reduce(
     (total, item) => {
       const { id, fields } = item;
       let { date } = fields;
       date = moment(new Date(date)).format('LL');
-      console.log(date);
+
       if (!total.datedTodos[date]) {
         total.datedTodos[date] = [{ id, ...fields }];
       } else {
@@ -25,9 +29,6 @@ const TodoGroup = ({ todoItems }) => {
 
   const todos = Object.values(datedTodos);
   const dates = Object.keys(datedTodos);
-
-  console.log(todos, dates);
-  // console.log(todos[0], dates[0]);
 
   return (
     <>

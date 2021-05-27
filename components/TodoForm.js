@@ -1,31 +1,28 @@
 import { useState, useContext } from 'react';
-import {
-  Input,
-  HStack,
-  Button,
-  useToast,
-  VStack,
-  FormControl,
-  Flex,
-  Box,
-  useColorModeValue,
-} from '@chakra-ui/react';
-import { nanoid } from 'nanoid';
-import moment from 'moment';
-
-import { useUser } from '@auth0/nextjs-auth0';
-
 import { TodosContext } from '../contexts/TodoContext';
 
+import {
+  Input,
+  Button,
+  useToast,
+  FormControl,
+  useColorModeValue,
+} from '@chakra-ui/react';
+
+import { nanoid } from 'nanoid';
+import moment from 'moment';
+import { useUser } from '@auth0/nextjs-auth0';
+
 const TodoForm = () => {
-  const [content, setContent] = useState('');
+  const [task, setTask] = useState('');
   const toast = useToast();
   const { addTodo } = useContext(TodosContext);
   const { user } = useUser();
 
   const submitHandler = (event) => {
     event.preventDefault();
-    if (content.trim() === '') {
+
+    if (task.trim() === '') {
       toast({
         title: 'Cannot add empty task',
         status: 'error',
@@ -37,28 +34,24 @@ const TodoForm = () => {
 
     const todo = {
       id: nanoid(),
-      // todo: content.trim(),
       fields: {
-        task: content,
+        task: task.trim(),
         completed: false,
         date: moment().format('L'),
         userId: user.sub,
       },
     };
 
-    //onAddTodo(todo);
     addTodo(todo);
-    setContent('');
+    setTask('');
   };
-
-  const inputHandler = (event) => setContent(event.target.value);
 
   return (
     <form onSubmit={submitHandler}>
-      <FormControl px={2}>
+      <FormControl>
         <Input
-          value={content}
-          onChange={inputHandler}
+          value={task}
+          onChange={(e) => setTask(e.target.value)}
           colorScheme="teal"
           variant="filled"
           placeholder="Enter new task"
@@ -70,13 +63,7 @@ const TodoForm = () => {
           my={2}
           bg={useColorModeValue('gray.200', 'gray.700')}
         />
-        <Button
-          colorScheme="teal"
-          type="submit"
-          w="inherit"
-          my={2}
-          rounded="md"
-        >
+        <Button colorScheme="teal" type="submit" w="100%" my={2} rounded="md">
           Add Task
         </Button>
       </FormControl>

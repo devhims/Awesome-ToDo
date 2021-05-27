@@ -76,7 +76,6 @@ const TodosProvider = ({ children }) => {
       value={{
         todos,
         setTodos,
-        // refreshTodos,
         updateTodo,
         deleteTodo,
         addTodo,

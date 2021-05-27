@@ -1,11 +1,10 @@
-import { ChakraProvider, Box, useColorModeValue } from '@chakra-ui/react';
+import { ChakraProvider } from '@chakra-ui/react';
 import customTheme from '../theme';
 
 import { UserProvider } from '@auth0/nextjs-auth0';
 import { TodosProvider } from '../contexts/TodoContext';
 
 import Header from '../components/Header';
-
 import Head from 'next/head';
 
 function MyApp({ Component, pageProps }) {

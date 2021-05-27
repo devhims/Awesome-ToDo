@@ -1,15 +1,10 @@
-import { useUser, getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { useUser } from '@auth0/nextjs-auth0';
 import { useEffect } from 'react';
-
 import { useRouter } from 'next/router';
-
 import { Center, Spinner, Box, Text } from '@chakra-ui/react';
 
 export default function Home() {
-  // const [todoItems, setTodoItems] = useState([]);
-
   const { user, error, isLoading } = useUser();
-
   const router = useRouter();
 
   useEffect(() => {
@@ -18,7 +13,7 @@ export default function Home() {
     }
   }, [user]);
 
-  if (isLoading)
+  const PageCenter = ({ children }) => {
     return (
       <Center
         pos="fixed"
@@ -26,6 +21,14 @@ export default function Home() {
         top="50%"
         transform="translate(-50%, -50%)"
       >
+        {children}
+      </Center>
+    );
+  };
+
+  if (isLoading)
+    return (
+      <PageCenter>
         <Spinner
           thickness="4px"
           speed="0.65s"
@@ -33,16 +36,12 @@ export default function Home() {
           color="blue.500"
           size="xl"
         />
-      </Center>
+      </PageCenter>
     );
+
   if (error)
     return (
-      <Center
-        pos="fixed"
-        top="50%"
-        left="50%"
-        transform="translate(-50%, -50%)"
-      >
+      <PageCenter>
         <Box
           borderWidth="2px"
           borderRadius="lg"
@@ -52,18 +51,13 @@ export default function Home() {
         >
           <Text fontSize="medium">{error.message}</Text>
         </Box>
-      </Center>
+      </PageCenter>
     );
 
   return (
     <>
       {!user && (
-        <Center
-          pos="fixed"
-          top="50%"
-          left="50%"
-          transform="translate(-50%, -50%)"
-        >
+        <PageCenter>
           <Box
             borderWidth="2px"
             borderRadius="lg"
@@ -71,12 +65,14 @@ export default function Home() {
             py={3}
             textAlign="center"
           >
-            <Text fontSize="medium">Please login to save your tasks</Text>
+            <Text fontSize="medium">
+              Please login to save and view your tasks
+            </Text>
           </Box>
-        </Center>
+        </PageCenter>
       )}
       {user && (
-        <Center pos="fixed" left="50%" top="50%">
+        <PageCenter>
           <Spinner
             thickness="4px"
             speed="0.65s"
@@ -84,10 +80,8 @@ export default function Home() {
             color="blue.500"
             size="xl"
           />
-        </Center>
+        </PageCenter>
       )}
     </>
   );
 }
-
-// { filterByFormula: `userId = '${user.user.sub}'` }

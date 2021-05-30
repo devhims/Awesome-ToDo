@@ -64,6 +64,7 @@ export default function Home() {
             px={5}
             py={3}
             textAlign="center"
+            minW="200px"
           >
             <Text fontSize="medium">
               Please login to save and view your tasks

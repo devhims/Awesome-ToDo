@@ -22,6 +22,7 @@ const AuthTodos = ({ initialTodos }) => {
           direction="column"
           py={3}
           px={{ base: 0, md: 2 }}
+          w="100%"
           maxWidth={{ base: '90vw', sm: '80vw', lg: '50vw', xl: '40vw' }}
         >
           <TodoForm />

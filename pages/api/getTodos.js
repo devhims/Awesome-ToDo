@@ -18,5 +18,3 @@ export default withApiAuthRequired(async (req, res) => {
     res.json({ msg: 'Something went wrong' });
   }
 });
-
-// { filterByFormula: `userId = '${user.sub}'` }

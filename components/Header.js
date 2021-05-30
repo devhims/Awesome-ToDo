@@ -35,11 +35,7 @@ const Header = () => {
       <HStack>
         <Button variant="outline" colorScheme="teal">
           {user ? (
-            <Link href="/api/auth/logout">
-              <a>
-                <Text>Logout</Text>
-              </a>
-            </Link>
+            <Link href="/api/auth/logout">Logout</Link>
           ) : (
             <Link href="/api/auth/login">Login</Link>
           )}

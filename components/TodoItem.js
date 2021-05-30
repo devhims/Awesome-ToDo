@@ -5,7 +5,6 @@ import {
   Checkbox,
   HStack,
   IconButton,
-  Input,
   Spacer,
   Text,
   useToast,
@@ -15,7 +14,6 @@ import {
 import { FaTrash, FaEdit, FaCheck } from 'react-icons/fa';
 
 const TodoItem = ({ todo }) => {
-  // console.log(todo);
   const [complete, setComplete] = useState(todo.completed);
   const [task, setTask] = useState(todo.task);
   const [isEditing, setIsEditing] = useState(false);
@@ -78,7 +76,6 @@ const TodoItem = ({ todo }) => {
       {isEditing && (
         <>
           <Textarea
-            // size="sm"
             onChange={(event) => setTask(event.target.value)}
             value={task}
             borderStyle="none"

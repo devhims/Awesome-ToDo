@@ -1,7 +1,8 @@
 import { table } from './utils/airtable.js';
 import { withApiAuthRequired } from '@auth0/nextjs-auth0';
+import OwnsRecord from './middleware/OwnsRecord.js';
 
-const handler = withApiAuthRequired(async (req, res) => {
+const handler = OwnsRecord(async (req, res) => {
   const todo = req.body;
   delete todo.fields.id;
   try {

@@ -4,8 +4,6 @@ A full stack project bulit with NextJs, ChakraUI, Auth0 and, Airtable.
 
 ## Steps:
 
----
-
 1. Clone/Download the repo.
 2. `cd` into the project folder.
 3. Run `npm i` to install dependencies

@@ -24,6 +24,7 @@ const TodosProvider = ({ children }) => {
           (entry) => entry.fields === todo.fields
         );
         existingTodo.id = newTodo.id;
+        // console.log(existingTodos);
         return existingTodos;
       });
     } catch (err) {
@@ -32,7 +33,6 @@ const TodosProvider = ({ children }) => {
   };
 
   const updateTodo = async (updatedTodo) => {
-    // console.log(updatedTodo);
     try {
       setTodos((prevTodos) => {
         const existingTodos = [...prevTodos];
@@ -42,6 +42,8 @@ const TodosProvider = ({ children }) => {
         existingTodo.fields = updatedTodo.fields;
         return existingTodos;
       });
+
+      console.log(updatedTodo);
 
       await fetch('/api/updateTodo', {
         method: 'PUT',

@@ -37,7 +37,7 @@ const TodoForm = () => {
       fields: {
         task: task.trim(),
         completed: false,
-        date: moment().format('L'),
+        date: moment().format('YYYY-MM-DD'),
         userId: user.sub,
       },
     };

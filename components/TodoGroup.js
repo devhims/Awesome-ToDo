@@ -13,12 +13,15 @@ const TodoGroup = () => {
     (total, item) => {
       const { id, fields } = item;
       let { date } = fields;
-      date = moment(new Date(date)).format('LL');
+      const dateView = moment(new Date(date)).format('LL');
 
-      if (!total.datedTodos[date]) {
-        total.datedTodos[date] = [{ id, ...fields }];
+      if (!total.datedTodos[dateView]) {
+        total.datedTodos[dateView] = [{ id, ...fields }];
       } else {
-        total.datedTodos[date] = [...total.datedTodos[date], { id, ...fields }];
+        total.datedTodos[dateView] = [
+          ...total.datedTodos[dateView],
+          { id, ...fields },
+        ];
       }
       return total;
     },
@@ -32,9 +35,9 @@ const TodoGroup = () => {
 
   return (
     <>
-      {dates.map((date, index) => {
+      {dates.map((dateEntry, index) => {
         return (
-          <Box key={date}>
+          <Box key={dateEntry}>
             <Badge
               m={2}
               p={2}
@@ -44,7 +47,7 @@ const TodoGroup = () => {
               roundedTopRight="md"
               roundedBottomRight="md"
             >
-              {date}
+              {dateEntry}
             </Badge>
             <TodoItems todoItems={todos[index]} />
           </Box>

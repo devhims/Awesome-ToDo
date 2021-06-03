@@ -6,8 +6,9 @@ import moment from 'moment';
 
 import TodoItems from '../components/TodoItems';
 
-const TodoGroup = () => {
-  const { todos: todoItems } = useContext(TodosContext);
+const TodoGroup = ({ todos }) => {
+  //const { todos: todoItems } = useContext(TodosContext);
+  const todoItems = [...todos];
 
   const { datedTodos } = todoItems.reduce(
     (total, item) => {
@@ -30,7 +31,7 @@ const TodoGroup = () => {
     }
   );
 
-  const todos = Object.values(datedTodos);
+  const todosForDate = Object.values(datedTodos);
   const dates = Object.keys(datedTodos);
 
   return (
@@ -49,7 +50,7 @@ const TodoGroup = () => {
             >
               {dateEntry}
             </Badge>
-            <TodoItems todoItems={todos[index]} />
+            <TodoItems todoItems={todosForDate[index]} />
           </Box>
         );
       })}

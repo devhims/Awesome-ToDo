@@ -1,5 +1,5 @@
-import { useState, useContext } from 'react';
-import { TodosContext } from '../contexts/TodoContext';
+import { useState, useContext, useEffect } from 'react';
+import { useCount } from '../contexts/TodoContext';
 
 import {
   Checkbox,
@@ -19,7 +19,15 @@ const TodoItem = ({ todo }) => {
   const [isEditing, setIsEditing] = useState(false);
   const toast = useToast();
 
-  const { updateTodo, deleteTodo } = useContext(TodosContext);
+  const [showOptions, setShowOptions] = useState(false);
+
+  const { updateTodo, deleteTodo, canCheck } = useCount();
+
+  useEffect(() => {
+    if (canCheck) {
+      setShowOptions(true);
+    }
+  }, [canCheck]);
 
   const updateChecked = () => {
     setComplete(!complete);
@@ -56,13 +64,15 @@ const TodoItem = ({ todo }) => {
 
   return (
     <HStack key={todo.id} m={2} alignItems="center">
-      <Checkbox
-        colorScheme="teal"
-        size="md"
-        borderColor="teal"
-        onChange={updateChecked}
-        isChecked={complete}
-      ></Checkbox>
+      {showOptions && (
+        <Checkbox
+          colorScheme="teal"
+          size="md"
+          borderColor="teal"
+          onChange={updateChecked}
+          isChecked={complete}
+        ></Checkbox>
+      )}
       {!isEditing && (
         <Text
           as={complete && 's'}
@@ -98,7 +108,7 @@ const TodoItem = ({ todo }) => {
         </>
       )}
       {!isEditing && <Spacer />}
-      {!isEditing && (
+      {!isEditing && showOptions && (
         <HStack spacing="3">
           <IconButton
             icon={<FaEdit />}

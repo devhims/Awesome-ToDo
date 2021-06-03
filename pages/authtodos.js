@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react';
-import { TodosContext } from '../contexts/TodoContext';
+import { useCount } from '../contexts/TodoContext';
 
 import { getSession, withPageAuthRequired } from '@auth0/nextjs-auth0';
 import { table, minifyRecords } from '../pages/api/utils/airtable';
@@ -9,10 +9,11 @@ import TodoForm from '../components/TodoForm';
 import AllTodos from '../components/AllTodos';
 
 const AuthTodos = ({ initialTodos }) => {
-  const { setTodos } = useContext(TodosContext);
+  const { todos, setTodos, setCanCheck } = useCount();
 
   useEffect(() => {
     setTodos(initialTodos);
+    setCanCheck(true);
   }, []);
 
   return (
@@ -26,7 +27,7 @@ const AuthTodos = ({ initialTodos }) => {
           maxWidth={{ base: '90vw', sm: '80vw', lg: '50vw', xl: '40vw' }}
         >
           <TodoForm />
-          <AllTodos />
+          <AllTodos todos={todos} />
         </Flex>
       </Flex>
     </>

@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react';
-import { TodosContext } from '../contexts/TodoContext';
+import { useCount } from '../contexts/TodoContext';
 
 import {
   Input,
@@ -16,11 +16,13 @@ import { useUser } from '@auth0/nextjs-auth0';
 const TodoForm = () => {
   const [task, setTask] = useState('');
   const toast = useToast();
-  const { addTodo } = useContext(TodosContext);
+  const { addTodo, setCanCheck } = useCount();
   const { user } = useUser();
 
   const submitHandler = (event) => {
     event.preventDefault();
+
+    setCanCheck(false);
 
     if (task.trim() === '') {
       toast({

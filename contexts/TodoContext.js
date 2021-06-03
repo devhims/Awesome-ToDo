@@ -1,8 +1,9 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useContext } from 'react';
 const TodosContext = createContext();
 
 const TodosProvider = ({ children }) => {
   const [todos, setTodos] = useState([]);
+  const [canCheck, setCanCheck] = useState(false);
 
   const addTodo = async (todo) => {
     try {
@@ -27,6 +28,8 @@ const TodosProvider = ({ children }) => {
         // console.log(existingTodos);
         return existingTodos;
       });
+
+      setCanCheck(true);
     } catch (err) {
       console.error(err);
     }
@@ -81,6 +84,8 @@ const TodosProvider = ({ children }) => {
         updateTodo,
         deleteTodo,
         addTodo,
+        canCheck,
+        setCanCheck,
       }}
     >
       {children}
@@ -88,4 +93,12 @@ const TodosProvider = ({ children }) => {
   );
 };
 
-export { TodosProvider, TodosContext };
+const useCount = () => {
+  const context = useContext(TodosContext);
+  if (context === undefined) {
+    throw new Error('useCount must be used within a CountProvider');
+  }
+  return context;
+};
+
+export { TodosProvider, useCount };
